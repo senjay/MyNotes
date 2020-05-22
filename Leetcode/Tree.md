@@ -2,7 +2,7 @@
 
 ## 简单
 
-### 100 相同的树
+### 100 [相同的树](https://leetcode-cn.com/problems/same-tree/)
 
 *给定两个二叉树，编写一个函数来检验它们是否相同。*
 
@@ -22,7 +22,7 @@ public:
 
 
 
-### 101 对称的树
+### 101 [对称二叉树](https://leetcode-cn.com/problems/symmetric-tree/)
 
 *给定一个二叉树，检查它是否是镜像对称的。*
 
@@ -46,7 +46,7 @@ public:
 
 
 
-### 104 树的最大深度
+### 104 [二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
 
 *给定一个二叉树，找出其最大深度。*
 
@@ -66,7 +66,7 @@ public:
 
 ## 中等
 
-### 94 二叉树的中序遍历
+### 94 [二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/)
 
 *非递归方法*
 
@@ -97,6 +97,30 @@ public:
 ```
 
 
+
+###  105 [从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+
+递归构造，常规。
+
+```c++
+class Solution {
+public:
+    TreeNode* build(vector<int>& pre,int ps,int pe, vector<int>& inorder,int is,int ie)
+    {
+        if(ps>pe||is>ie)return NULL;
+        TreeNode* t=new TreeNode();
+        t->val=pre[ps];
+        int k=is;
+        while(is<ie&&inorder[k]!=t->val)k++;//寻找中序中的头节点
+        t->left=build(pre,ps+1,ps+k-is,inorder,is,k-1);//构造左子树
+        t->right=build(pre,ps+k-is+1,pe,inorder,k+1,ie);//构造右子树
+        return t;
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return build(preorder,0,preorder.size()-1,inorder,0,inorder.size()-1);
+    }
+};
+```
 
 
 

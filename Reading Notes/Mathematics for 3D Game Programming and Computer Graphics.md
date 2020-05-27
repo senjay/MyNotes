@@ -68,6 +68,10 @@ $$
 $$
 ,其中$\frac{QQ^T}{Q^TQ}$为投影矩阵。	
 
+​			施密特正交化，将集合中的每个向量减去该向量在其前面的所有向量上的投影，则处理完后所有向量正交。
+
+![image-20200527144202874](Mathematics for 3D Game Programming and Computer Graphics/image-20200527144202874.png)
+
 ## 第三章 矩阵
 
 

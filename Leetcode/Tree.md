@@ -4,9 +4,9 @@
 
 ### 100 [相同的树](https://leetcode-cn.com/problems/same-tree/)
 
-*给定两个二叉树，编写一个函数来检验它们是否相同。*
+给定两个二叉树，编写一个函数来检验它们是否相同。
 
-*如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。*
+如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
 
 ```c++
 class Solution {
@@ -24,7 +24,7 @@ public:
 
 ### 101 [对称二叉树](https://leetcode-cn.com/problems/symmetric-tree/)
 
-*给定一个二叉树，检查它是否是镜像对称的。*
+给定一个二叉树，检查它是否是镜像对称的。
 
 上题的引申
 
@@ -48,9 +48,9 @@ public:
 
 ### 104 [二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
 
-*给定一个二叉树，找出其最大深度。*
+给定一个二叉树，找出其最大深度。
 
-*二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。*
+二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
 
 ```c++
 class Solution {
@@ -68,7 +68,7 @@ public:
 
 ### 94 [二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/)
 
-*非递归方法*
+非递归方法
 
 ```c++
 class Solution {

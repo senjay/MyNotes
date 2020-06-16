@@ -92,4 +92,134 @@ $$
 
 ​		若$M$为正交阵，应用上述规律，由$detM=\pm1$,当$detM=1$，说明为一个旋转变换；$detM=-1$说明为一个旋转变换和一个反射变换的组合变换。
 
-### 4.3 比例变换
+### 4.2 比例变换
+
+​		通过左乘对角阵来进行$x,y,z$轴的比例变换，如果要沿任意轴变换，可先进行坐标系变换，再比例变换，再还原坐标系，如下。
+$$
+\begin{bmatrix} x^{'}\\y^{'}\\z^{'}\end{bmatrix} =
+\begin{bmatrix} U_1&V_1&W_1\\U_2&V_2&W_2\\U_3&V_3&W_3\end{bmatrix}
+\begin{bmatrix} a&0&0\\0&b&0\\0&0&c\end{bmatrix}
+\begin{bmatrix} U_1&V_1&W_1\\U_2&V_2&W_2\\U_3&V_3&W_3\end{bmatrix}^{-1}
+\begin{bmatrix} x\\y\\z\end{bmatrix}
+$$
+
+### 4.3 旋转变换
+
+#### 4.3.1 二维
+
+​		如果要求$P$逆时针旋转$\theta$得到的$P^{'}$，记$Q$为$P$逆时针旋转90°后的向量,即$(-P_y,P_x)$,则$P$与$Q$正好组成了**该平面内的一组正交向量**，任何向量都可由其线性表出，由基本几何和三角学可得到：
+$$
+P^{'}=Pcos\theta+Qsin\theta
+$$
+
+则
+$$
+\begin{aligned}P_x^{'}&=P_xcos\theta-P_ysin\theta\\
+P_{y}^{'}&=P_ysin\theta-P_xcos\theta\\
+\end{aligned}
+$$
+写成矩阵为
+$$
+P^{'}=\begin{bmatrix}cos\theta&-sin\theta\\sin\theta&cos\theta\end{bmatrix}P
+$$
+
+#### 4.3.2 三维绕坐标轴旋转
+
+![image-20200606132118914](Mathematics for 3D Game Programming and Computer Graphics/image-20200606132118914.png)
+
+![image-20200606132127655](Mathematics for 3D Game Programming and Computer Graphics/image-20200606132127655.png)
+
+​		注意$R_y(\theta)$与其他不同是因为如果按照逆时针旋转，由$x\times z=-y$,则得到$y$轴负方向，因此需改为顺时针，即$-\theta$,这无论是在左手坐标系还是右手系都是相同的。
+
+#### 4.3.3 三维绕任意轴旋转
+
+​		  **向量$P$绕任意轴$A$旋转$\theta$角度证明：**
+
+​		不妨设$A$为单位向量，同时$P$可分解为与$A$平行和垂直的两个分量，分别为：
+$$
+\begin{align}
+P_{projA}&=(A\cdot P)A=AA^TP\\
+P_{perpA}&=P-(A\cdot P)A=P-AA^TP
+\end{align}
+$$
+如图所示
+
+![image-20200606161620614](Mathematics for 3D Game Programming and Computer Graphics/image-20200606161620614.png)
+
+故最终结果
+$$
+P^{'}=P_{perpA}^{'}+P_{ProjA}
+$$
+其中$$P_{PerpA}^{'}$$为$$P_{perpA}$$旋转$$\theta$$后得到的向量，如图
+
+![image-20200606161747676](Mathematics for 3D Game Programming and Computer Graphics/image-20200606161747676.png)
+
+为求得其值，需找到一组线性组合来表示它，可选$P_{perpA}$与其旋转90°后的向量这两个向量作为组合，可以得知$A\times P$即为该向量，同时它的长度是与$P_{perpA}$相等的，这是因为
+$$
+|A\times P|=|P|sin\alpha=|P-(A\cdot P)A|
+$$
+所以
+$$
+P_{perpA}^{'}=[P-(A\cdot P)A]cos\theta+(A \times P)sin \theta
+$$
+所以
+$$
+\begin{align}
+P^{'}&=[P-(A\cdot P)A]cos\theta+(A \times P)sin \theta+(A\cdot P)A\\
+&=Pcos\theta+A\times P sin\theta+(A\cdot P)A(1-cos\theta)
+\end{align}
+$$
+记$I$为单位阵，则矩阵形式为
+$$
+P^{'}=\{Icos\theta+\begin{bmatrix} 0&-A_z&A_y\\A_z&0&-A_x\\-A_y&A_x&0\end{bmatrix}sin\theta+AA^T(1-cos\theta)\}P
+$$
+其中记
+$$
+R=Icos\theta+\begin{bmatrix} 0&-A_z&A_y\\A_z&0&-A_x\\-A_y&A_x&0\end{bmatrix}sin\theta+AA^T(1-cos\theta)
+$$
+为罗德里格斯旋转公式，而将其展开写成一个矩阵就可得到旋转矩阵。
+
+
+
+### 4.4 齐次坐标
+
+​		引入第四维度，即四维矩阵$F$得描述来取代之前得三维矩阵的线性变换，这两者是等效的。
+$$
+F=\begin{bmatrix}M_{33}&\vdots&T_{13}\\0&\vdots&1\end{bmatrix}
+$$
+这是一个分块矩阵，由之前线性变换中的三维矩阵$M$和三维向量$T$组成，同时我们用$\{x,y,z,1\}$代表点，$\{x,y,z,1\}$代表向量。
+
+
+
+### 4.5 法向量变换
+
+​		当物体经过变换后，其原表面上的法向量就不一定与原来相同了，尤其是发生形变后。不妨设$n,t$分别为变换前的法向量与切向量，$n^{'},t^{'}$为变换后正确的法向量与切向量。则
+$$
+\begin{align}
+t^Tn=0\\
+t^TM^T(M^T)^{-1}n=0\\
+(Mt)^T(M^{-1})^Tn=0\\
+t^{'T}n^{'}=0
+\end{align}
+$$
+即切向量的变换方法为左乘$(M^{-1})^T$,那么如果$M$为正交阵，法向量的变换为$Mn$,这也就是说，如果变换时不改变物体的大小形状，法向量的变换是与物体相同的。
+
+
+
+### 4.6 四元数
+
+​		$q=(w,x,y,z)=w+xi+yj+zk$为四元数，有实部和虚部组成。四元数$q=s+v$的共轭为$\bar q=s-v$,
+
+有，
+$$
+q\bar q=\bar q q=|q|^2=q^2
+$$
+故$q$的倒数$q^{-1}$为：
+$$
+q^{-1}=\frac{\bar q}{|q|^2}
+$$
+​		三维中P点的旋转描述为：
+$$
+\varphi(P)=qPq^{-1}
+$$
+其中，$q=cos\frac{\theta}{2}+Asin\frac{\theta}{2}$,${A}$为任意单位旋转轴，$\theta$为旋转角度。函数$\varphi$为同态函数，其映射满足长度，角度，偏手性不变。
